@@ -3,697 +3,718 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizwan's Pro - Remove Background Instantly</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Remove Background from Image Free - Rizwan's Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ========== COMPLETE CSS ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         body {
-            background-color: #ffffff;
-            color: #1e293b;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Sticky Header */
-        .sticky-header {
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 16px 0;
             position: sticky;
             top: 0;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 16px 0;
             z-index: 100;
         }
 
-        .sticky-header .container {
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .logo i {
-            color: #4f46e5;
-            font-size: 1.8rem;
-        }
-
-        .logo .pro {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        nav a {
-            color: #475569;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
             text-decoration: none;
-            margin-left: 32px;
-            font-weight: 500;
-            transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: #4f46e5;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 60px 0 40px;
+            padding: 80px 20px 60px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            color: #0f172a;
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
-        .hero .highlight {
-            color: #4f46e5;
-            background: #eef2ff;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 1.8rem;
+        .hero h1 span {
+            color: #667eea;
         }
 
-        .hero .subhead {
-            font-size: 1.2rem;
-            color: #64748b;
+        .hero p {
+            font-size: 20px;
+            color: #666;
             margin-bottom: 40px;
         }
 
-        /* Upload Box */
+        /* Upload Area */
+        .upload-section {
+            max-width: 600px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
         .upload-box {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 24px;
-            padding: 48px 24px;
-            max-width: 700px;
-            margin: 0 auto;
-            transition: all 0.3s;
+            border: 2px dashed #d1d5db;
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            background: #fafafa;
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .upload-box:hover {
-            border-color: #4f46e5;
-            background: #f1f5f9;
+            border-color: #667eea;
+            background: #f0f4ff;
         }
 
-        .upload-box i {
-            color: #4f46e5;
-            margin-bottom: 16px;
+        .upload-icon {
+            width: 80px;
+            height: 80px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 32px;
         }
 
         .upload-box h3 {
-            font-size: 1.5rem;
-            font-weight: 500;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
             margin-bottom: 8px;
         }
 
-        .upload-box .browse {
-            color: #4f46e5;
-            font-weight: 600;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .upload-box .small-text {
-            color: #64748b;
+        .upload-box p {
+            color: #666;
+            font-size: 16px;
             margin-bottom: 24px;
         }
 
-        .upload-box .disclaimer {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .upload-box .disclaimer a {
-            color: #475569;
-        }
-
-        /* Example Images */
-        .example-images {
-            margin-top: 40px;
-        }
-
-        .example-images p {
-            color: #64748b;
-            margin-bottom: 12px;
-        }
-
-        .thumbnails {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .thumbnails img {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.3s;
-            background: #e2e8f0;
-            object-fit: cover;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .thumbnails img:hover {
-            border-color: #4f46e5;
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        /* Comparison Slider */
-        .comparison-section {
-            padding: 60px 0;
-            text-align: center;
+        /* Preview Section */
+        .preview-section {
+            display: none;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .comparison-slider {
-            position: relative;
-            max-width: 600px;
-            margin: 30px auto;
+        .preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .preview-box {
+            background: #fff;
             border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .before-image, .after-image {
+        .preview-box h4 {
+            padding: 16px 20px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e5e5;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .preview-box img {
             width: 100%;
-            display: block;
-            object-fit: cover;
+            height: 400px;
+            object-fit: contain;
+            background: #f3f4f6;
         }
 
-        .after-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+        .arrow-icon {
+            text-align: center;
+            font-size: 32px;
+            color: #667eea;
         }
 
-        .slider {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            z-index: 10;
-            opacity: 0.8;
-            cursor: ew-resize;
+        /* Results Actions */
+        .results-actions {
+            text-align: center;
+            margin-top: 32px;
         }
 
         .btn-download {
-            background: #4f46e5;
+            background: #10b981;
             color: white;
             border: none;
-            padding: 14px 32px;
-            font-size: 1.1rem;
-            border-radius: 40px;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
         }
 
         .btn-download:hover {
-            background: #4338ca;
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Features */
+        .features {
+            background: #f9fafb;
+            padding: 80px 20px;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: #1a1a1a;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #f0f4ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 15px;
         }
 
         /* Trust Badges */
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 40px 0;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #475569;
-        }
-
-        .badge i {
-            color: #4f46e5;
-            font-size: 1.4rem;
-        }
-
-        /* Reviews */
-        .reviews {
-            padding: 60px 0;
+        .trust-section {
+            padding: 60px 20px;
             text-align: center;
+            border-top: 1px solid #e5e5e5;
         }
 
-        .reviews h2 {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            color: #0f172a;
-        }
-
-        .review-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .review-card {
-            background: #f8fafc;
-            padding: 24px;
-            border-radius: 16px;
-            text-align: left;
-            border: 1px solid #e2e8f0;
-        }
-
-        .stars {
-            color: #fbbf24;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-        }
-
-        .review-card p {
-            color: #334155;
-            margin-bottom: 16px;
-            font-style: italic;
-        }
-
-        .reviewer {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        footer {
-            background: #0f172a;
-            color: white;
-            padding: 60px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h4 {
-            color: #94a3b8;
-            margin-bottom: 20px;
-            font-size: 1rem;
+        .trust-section p {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .footer-section p {
-            color: #cbd5e1;
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .trust-badge i {
+            color: #fbbf24;
+        }
+
+        /* Reviews */
+        .reviews {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reviews h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .review-card {
+            background: #f9fafb;
+            padding: 32px;
+            border-radius: 16px;
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .review-text {
+            color: #374151;
+            font-size: 16px;
+            margin-bottom: 20px;
             line-height: 1.6;
         }
 
-        .footer-section ul {
-            list-style: none;
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul li a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section ul li a:hover {
+        .reviewer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-weight: 600;
         }
 
-        .social-icons {
+        .reviewer-info h4 {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .reviewer-info p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .footer-social {
             display: flex;
             gap: 16px;
         }
 
-        .social-icons a {
-            color: #cbd5e1;
-            font-size: 1.4rem;
-            transition: color 0.3s;
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
         }
 
-        .social-icons a:hover {
+        .footer-social a:hover {
+            background: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
             color: white;
         }
 
-        .copyright {
-            border-top: 1px solid #1e293b;
-            padding-top: 30px;
+        /* Loading */
+        .loading {
+            display: none;
             text-align: center;
-            color: #94a3b8;
+            padding: 40px;
         }
 
-        .copyright i {
-            color: #ef4444;
-        }
-
-        /* Loading Spinner */
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #4f46e5;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f4f6;
+            border-top-color: #667eea;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Responsive */
+        /* Error */
+        .error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 32px;
             }
             
-            .trust-badges {
-                gap: 20px;
+            .preview-container {
+                grid-template-columns: 1fr;
             }
             
-            .badge {
-                width: 40%;
+            .arrow-icon {
+                transform: rotate(90deg);
             }
             
-            nav a {
-                margin-left: 16px;
+            .nav-links {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Sticky Header -->
-    <header class="sticky-header">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-cut"></i>
-                <span>Rizwan's <span class="pro">Pro</span></span>
-            </div>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">API</a>
-                <a href="#">Pricing</a>
-                <a href="#">Support</a>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                Rizwan's Pro
+            </a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#api">API</a>
+                <a href="#help">Help</a>
             </nav>
         </div>
     </header>
 
-    <main class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Remove Background from Image <span class="highlight">for Free</span></h1>
-            <p class="subhead">100% automatic and fast – just like remove.bg</p>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Remove Background from <span>Image</span> Free</h1>
+        <p>100% Automatically and Free. Remove backgrounds instantly with AI.</p>
+    </section>
 
-            <!-- Upload Box -->
-            <div class="upload-box" id="uploadBox">
-                <i class="fas fa-cloud-upload-alt fa-3x"></i>
-                <h3>Drag & drop a file or <span class="browse">browse</span></h3>
-                <p class="small-text">or paste an image or URL</p>
-                <input type="file" id="fileInput" accept="image/*" hidden>
-                <p class="disclaimer">By uploading, you agree to our <a href="#">Terms</a>.</p>
+    <!-- Upload -->
+    <section class="upload-section">
+        <div class="upload-box" id="dropZone">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
             </div>
+            <h3>Drag & Drop Your Image</h3>
+            <p>or click to upload (JPG, PNG, WEBP up to 5MB)</p>
+            <button class="btn-primary" onclick="document.getElementById('imageInput').click()">
+                <i class="fas fa-plus"></i> Upload Image
+            </button>
+            <input type="file" id="imageInput" accept="image/*" hidden>
+        </div>
 
-            <!-- Example Images -->
-            <div class="example-images">
-                <p>No image? Try one:</p>
-                <div class="thumbnails">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%234f46e5'/%3E%3Ctext x='30' y='35' font-size='12' text-anchor='middle' fill='white' font-family='Arial'%3EPerson%3C/text%3E%3C/svg%3E" alt="Person">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%2310b981'/%3E%3Ctext x='30' y='35' font-size='12' text-anchor='middle' fill='white' font-family='Arial'%3ECar%3C/text%3E%3C/svg%3E" alt="Car">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' fill='%23f59e0b'/%3E%3Ctext x='30' y='35' font-size='12' text-anchor='middle' fill='white' font-family='Arial'%3EProduct%3C/text%3E%3C/svg%3E" alt="Product">
-                </div>
-            </div>
-        </section>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Removing background...</p>
+        </div>
 
-        <!-- Before/After Comparison (Hidden by default) -->
-        <section class="comparison-section" id="comparison" style="display: none;">
-            <h2>See the Magic</h2>
-            <div class="comparison-slider">
-                <img src="" id="beforeImage" class="before-image" alt="Original">
-                <img src="" id="afterImage" class="after-image" alt="Background Removed">
-                <input type="range" min="0" max="100" value="50" id="slider" class="slider">
-            </div>
-            <div id="loadingSpinner" class="spinner" style="display: none;"></div>
-            <button class="btn-download" id="downloadBtn" style="display: none;"><i class="fas fa-download"></i> Download Result</button>
-        </section>
+        <div class="error" id="error">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+        </div>
+    </section>
 
-        <!-- Trust Badges -->
-        <section class="trust-badges">
-            <div class="badge">
-                <i class="fas fa-star"></i>
-                <span><strong>4.9</strong> (50K+ reviews)</span>
+    <!-- Preview -->
+    <section class="preview-section" id="previewSection">
+        <div class="preview-container">
+            <div class="preview-box">
+                <h4><i class="fas fa-image"></i> Original</h4>
+                <img id="originalImage" src="" alt="Original">
             </div>
-            <div class="badge">
-                <i class="fas fa-users"></i>
-                <span><strong>50+ Million</strong> users</span>
+            <div class="arrow-icon">
+                <i class="fas fa-arrow-right"></i>
             </div>
-            <div class="badge">
-                <i class="fas fa-clock"></i>
-                <span><strong>5 sec</strong> processing</span>
-            </div>
-            <div class="badge">
-                <i class="fas fa-shield-alt"></i>
-                <span><strong>Privacy</strong> guaranteed</span>
-            </div>
-        </section>
-
-        <!-- Customer Reviews -->
-        <section class="reviews">
-            <h2>They love Rizwan's Pro, you will too.</h2>
-            <div class="review-grid">
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The AI is amazing! Handles hair perfectly, just like the original remove.bg."</p>
-                    <span class="reviewer">— Alex M., Designer</span>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Best free tool out there. Saves me hours of work. Highly recommended!"</p>
-                    <span class="reviewer">— Sarah K., E-commerce</span>
-                </div>
-                <div class="review-card">
-                    <div class="stars">★★★★☆</div>
-                    <p>"Super fast and accurate. The API integration is a game-changer."</p>
-                    <span class="reviewer">— David L., Developer</span>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Rizwan's Pro</h4>
-                    <p>AI-powered background removal tool. Fast, free, and professional.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Plugins</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Terms</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2024 Rizwan's Pro. All rights reserved. Made with <i class="fas fa-heart"></i> for creators.</p>
+            <div class="preview-box">
+                <h4><i class="fas fa-check-circle"></i> Result</h4>
+                <img id="resultImage" src="" alt="Result">
             </div>
         </div>
-    </footer>
+        <div class="results-actions">
+            <a id="downloadBtn" class="btn-download" download="rizwan-bg-removed.png">
+                <i class="fas fa-download"></i> Download Free
+            </a>
+        </div>
+    </section>
 
-    <script>
-        // ========== COMPLETE JAVASCRIPT WITH YOUR API KEY ==========
-        
-        // ✅ APKI API KEY YAHAN LAGI HUI HAI (Line 394)
-        const API_KEY = '6nCU3cAqm1upcdB27FkTAzDw'; // <-- Aapki API key
-        const API_URL = 'https://api.remove.bg/v1.0/removebg';
+    <!-- Trust Badges -->
+    <section class="trust-section">
+        <p>Trusted by Professionals Worldwide</p>
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-star"></i> 4.9/5 Rating
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-users"></i> 50K+ Users
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-bolt"></i> 5 Sec Processing
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i> 100% Secure
+            </div>
+        </div>
+    </section>
 
-        // DOM Elements
-        const uploadBox = document.getElementById('uploadBox');
-        const fileInput = document.getElementById('fileInput');
-        const comparisonSection = document.getElementById('comparison');
-        const beforeImage = document.getElementById('beforeImage');
-        const afterImage = document.getElementById('afterImage');
-        const slider = document.getElementById('slider');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        
-        let currentProcessedImageBlob = null;
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2>Why Choose Rizwan's Pro?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Remove backgrounds in under 5 seconds with our advanced AI technology.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Pixel Perfect</h3>
+                    <p>Get professional quality edges and transparent backgrounds every time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Your images are never stored. All processing happens securely.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>50 Free/Month</h3>
+                    <p>Get 50 free background removals every month. No credit card needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Upload box click
-        uploadBox.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        // Drag and drop
-        uploadBox.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadBox.style.borderColor = '#4f46e5';
-            uploadBox.style.background = '#f1f5f9';
-        });
-
-        uploadBox.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            uploadBox.style.borderColor = '#cbd5e1';
-            uploadBox.style.background = '#f8fafc';
-        });
-
-        uploadBox.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadBox.style.borderColor = '#cbd5e1';
-            uploadBox.style.background = '#f8fafc';
-            
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                processImage(file);
-            } else {
-                alert('Please drop an image file.');
-            }
-        });
-
-        // File selection
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                processImage(file);
-            }
-        });
-
-        // Example thumbnails
-        document.querySelectorAll('.thumbnails img').forEach((img, index) => {
-            img.addEventListener('click', () => {
-                // Create simple colored SVG blobs for examples
-                const colors = ['%234f46e5', '%2310b981', '%23f59e0b'];
-                const texts = ['Person', 'Car', 'Product'];
-                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="${colors[index]}"/><text x="150" y="160" font-size="30" text-anchor="middle" fill="white" font-family="Arial">${texts[index]}</text></svg>`;
-                const blob = new Blob([svg], { type: 'image/svg+xml' });
-                const file = new File([blob], `example-${index}.svg`, { type: 'image/svg+xml' });
-                processImage(file);
-            });
-        });
-
-        // Slider functionality
-        slider.addEventListener('input', (e) => {
-            const value = e.target.value;
-            afterImage.style.clipPath = `polygon(${value}% 0, 100% 0, 100% 100%, ${value}% 100%)`;
-        });
-
-        // Download button
-        downloadBtn.addEventListener('click', () => {
-            if (currentProcessedImageBlob) {
-                const url = window.URL.createObjectURL(currentProcessedImageBlob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'removed-background.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }
-        });
-
-        // Main processing function
-        async function processImage(file) {
-            // Show original image
-            const originalUrl = URL.createObjectURL(file);
-            beforeImage.src = originalUrl;
-            
-            // Show loading state
-            comparisonSection.style.display = 'block';
-            loadingSpinner.style.display = 'block';
-            afterImage.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            
-            try {
-                // Prepare form data
-                const formData = new FormData();
-                formData.append('image_file', file);
-                formData.append('size', 'auto');
-                
-                // Call remove.bg API
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'X-Api-Key': API_KEY
-                    },
-                    body: formData
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
-                }
-                
-                // Get processed image
-                const processedBlob = await response.blob();
-                currentProcessedImageBlob = processedBlob;
-                
-                // Show processed image
-                const processedUrl = URL.createObjectURL(processedBlob);
-                afterImage.src = processedUrl;
-                
-                // Hide loading, show image and download button
-                loadingSpinner.style.display = 'none';
-                afterImage.style.display = 'block';
-                downloadBtn.style.display = 'inline-block';
-                
-            } catch (error) {
-                console.error('Error:', error);
-                loadingSpinner.style.display = 'none';
-                afterImage.style.display = 'block';
-                afterImage.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'%3E%3Crect width=\'600\' height=\'400\' fill=\'%23fee2e2\'/%3E%3Ctext x=\'300\' y=\'200\' font-size=\'20\' text-anchor=\'middle\' fill=\'%23ef4444\' font-family=\'Arial\'%3EError processing image%3C/text%3E%3C/svg%3E';
-                
-                // Show error message
-                alert('Failed to process image. Please check your API key and try again.');
-            }
-        }
-    </script>
-</body>
-</html>
+    <!-- Reviews -->
+    <section class="reviews" id="reviews">
+        <div class="reviews-container">
+            <h2>What Users Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"Best background remover I've ever used! The quality is amazing and it's completely free. Highly recommended!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">AK</div>
+                        <div class="reviewer-info">
+                            <h4>Ahmed Khan</h4>
+                            <p>Professional Photographer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"I use this for my e-commerce store. Saves me hours of editing time. The AI is incredibly accurate!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">SR</div>
+                        <div class="reviewer-info">
+                            <h4>Sara Rahman</h4>
+                            <p>E-commerce Owner</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"Simple, fast, and effective. The 50 free credits p
