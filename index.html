@@ -31,9 +31,9 @@
         }
 
         .header-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -78,7 +78,6 @@
             color: #667eea;
         }
 
-        /* Language Selector */
         .language-selector {
             display: flex;
             align-items: center;
@@ -93,23 +92,22 @@
             font-size: 12px;
         }
 
-        /* Main Layout - Two Column */
-        .main-layout {
-            display: flex;
-            max-width: 1200px;
+        /* Main Layout */
+        .main-wrapper {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
-            gap: 40px;
+            padding: 40px 30px;
+            display: flex;
+            gap: 50px;
         }
 
-        /* Sidebar */
-        .sidebar {
+        /* Left Sidebar */
+        .left-sidebar {
             width: 280px;
             flex-shrink: 0;
-            padding: 40px 0;
         }
 
-        .product-hunt-badge {
+        .product-hunt {
             background: #f97316;
             color: white;
             padding: 12px 16px;
@@ -119,31 +117,37 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
         }
 
-        .product-hunt-badge i {
-            font-size: 20px;
-        }
-
-        .rating-box {
+        .rating-section {
             background: #f9fafb;
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 32px;
+            margin-bottom: 30px;
         }
 
-        .stars {
+        .stars-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .stars-filled {
             color: #fbbf24;
-            margin-bottom: 8px;
-            font-size: 18px;
+            font-size: 16px;
+            letter-spacing: 2px;
         }
 
-        .stars i {
-            margin-right: 2px;
+        .stars-empty {
+            color: #d1d5db;
+            font-size: 16px;
+            letter-spacing: 2px;
         }
 
         .rating-text {
-            color: #4b5563;
+            color: #6b7280;
             font-size: 14px;
         }
 
@@ -152,16 +156,16 @@
         }
 
         .sidebar-menu li {
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .sidebar-menu a {
             display: block;
-            padding: 10px 16px;
+            padding: 8px 16px;
             color: #374151;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 14px;
             transition: all 0.2s;
         }
 
@@ -170,60 +174,54 @@
             color: #667eea;
         }
 
-        .sidebar-menu .menu-header {
+        .menu-category {
             font-weight: 600;
             color: #1f2937;
             padding: 16px 16px 8px;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        /* Main Content */
-        .main-content {
+        /* Center Content */
+        .center-content {
             flex: 1;
+            max-width: 600px;
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 60px 0 40px;
-            max-width: 700px;
-            margin: 0 auto;
+        .main-heading {
+            margin-bottom: 30px;
         }
 
-        .hero h1 {
-            font-size: 48px;
+        .main-heading h1 {
+            font-size: 56px;
             font-weight: 700;
+            line-height: 1.1;
             color: #1a1a1a;
-            margin-bottom: 16px;
-            line-height: 1.2;
         }
 
-        .hero h1 span {
+        .main-heading h1 span {
             color: #667eea;
+            display: block;
+            font-size: 52px;
         }
 
-        .hero p {
+        .main-heading .subhead {
             font-size: 18px;
             color: #6b7280;
-            margin-bottom: 32px;
+            margin-top: 16px;
         }
 
-        /* Upload Area */
-        .upload-section {
-            max-width: 600px;
-            margin: 0 auto 60px;
-        }
-
+        /* Upload Box */
         .upload-box {
             border: 2px dashed #d1d5db;
-            border-radius: 20px;
-            padding: 50px 40px;
+            border-radius: 24px;
+            padding: 40px 30px;
             text-align: center;
             background: #fafafa;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             cursor: pointer;
+            margin-bottom: 20px;
         }
 
         .upload-box:hover {
@@ -232,28 +230,27 @@
         }
 
         .upload-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: #667eea;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
             color: white;
-            font-size: 32px;
+            font-size: 28px;
         }
 
         .upload-box h3 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .upload-box p {
             color: #6b7280;
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 20px;
         }
 
@@ -261,9 +258,9 @@
             background: #667eea;
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
@@ -275,116 +272,75 @@
         .btn-primary:hover {
             background: #5a67d8;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
         }
 
         /* Preview Section */
         .preview-section {
             display: none;
-            max-width: 900px;
-            margin: 40px auto;
+            margin-top: 30px;
         }
 
         .preview-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 20px;
             align-items: center;
         }
 
         .preview-box {
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
         .preview-box h4 {
-            padding: 14px 20px;
+            padding: 12px 16px;
             background: #f9fafb;
             border-bottom: 1px solid #e5e5e5;
             font-weight: 600;
-            color: #374151;
+            font-size: 14px;
         }
 
         .preview-box img {
             width: 100%;
-            height: 350px;
+            height: 250px;
             object-fit: contain;
             background: #f3f4f6;
         }
 
         .arrow-icon {
             text-align: center;
-            font-size: 28px;
+            font-size: 24px;
             color: #667eea;
-        }
-
-        .results-actions {
-            text-align: center;
-            margin-top: 30px;
         }
 
         .btn-download {
             background: #10b981;
             color: white;
             border: none;
-            padding: 14px 32px;
+            padding: 12px 28px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-download:hover {
-            background: #059669;
-            transform: translateY(-2px);
-        }
-
-        /* Trust Badges */
-        .trust-section {
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 1px solid #e5e5e5;
-            border-bottom: 1px solid #e5e5e5;
-            margin: 40px 0;
-        }
-
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .trust-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #4b5563;
-            font-weight: 600;
-        }
-
-        .trust-badge i {
-            color: #fbbf24;
-            font-size: 20px;
+            margin-top: 20px;
         }
 
         /* Loading & Error */
-        .loading {
+        .loading, .error {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 30px;
         }
 
         .spinner {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border: 3px solid #f3f4f6;
             border-top-color: #667eea;
             border-radius: 50%;
@@ -397,59 +353,77 @@
         }
 
         .error {
-            display: none;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
             color: #dc2626;
-            padding: 14px;
+            background: #fef2f2;
             border-radius: 8px;
-            margin: 20px auto;
-            max-width: 600px;
+            padding: 14px;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .trust-item i {
+            color: #fbbf24;
         }
 
         /* Footer */
         .footer {
             background: #f9fafb;
-            padding: 60px 20px 30px;
-            margin-top: 60px;
             border-top: 1px solid #e5e5e5;
+            padding: 50px 30px 30px;
+            margin-top: 50px;
         }
 
         .footer-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .footer-top {
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 40px;
             margin-bottom: 40px;
         }
 
-        .footer-section h4 {
+        .footer-col h4 {
             color: #1f2937;
-            margin-bottom: 20px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
+            margin-bottom: 20px;
         }
 
-        .footer-section ul {
+        .footer-col ul {
             list-style: none;
         }
 
-        .footer-section ul li {
+        .footer-col ul li {
             margin-bottom: 10px;
         }
 
-        .footer-section ul li a {
+        .footer-col ul li a {
             color: #6b7280;
             text-decoration: none;
             font-size: 14px;
             transition: color 0.2s;
         }
 
-        .footer-section ul li a:hover {
+        .footer-col ul li a:hover {
             color: #667eea;
         }
 
@@ -459,10 +433,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
             color: #9ca3af;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .footer-links {
@@ -473,7 +445,7 @@
         .footer-links a {
             color: #6b7280;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .footer-links a:hover {
@@ -481,22 +453,21 @@
         }
 
         /* Responsive */
-        @media (max-width: 900px) {
-            .main-layout {
+        @media (max-width: 1000px) {
+            .main-wrapper {
                 flex-direction: column;
             }
             
-            .sidebar {
+            .left-sidebar {
                 width: 100%;
-                padding: 20px 0 0;
             }
             
-            .preview-container {
-                grid-template-columns: 1fr;
+            .main-heading h1 {
+                font-size: 42px;
             }
             
-            .arrow-icon {
-                transform: rotate(90deg);
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -512,10 +483,8 @@
                 Rizwan's Pro
             </a>
             <nav class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#reviews">Reviews</a>
-                <a href="#api">API</a>
-                <a href="#help">Help</a>
+                <a href="#">Features</a>
+                <a href="#">Reviews</a>
             </nav>
             <div class="language-selector">
                 <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down"></i>
@@ -523,22 +492,18 @@
         </div>
     </header>
 
-    <!-- Main Layout with Sidebar -->
-    <div class="main-layout">
-        <!-- Sidebar (Screenshot 1) -->
-        <aside class="sidebar">
-            <div class="product-hunt-badge">
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <!-- Left Sidebar - Product Hunt & Menu -->
+        <aside class="left-sidebar">
+            <div class="product-hunt">
                 <i class="fab fa-product-hunt"></i> PRODUCT HUNT
             </div>
             
-            <div class="rating-box">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span style="color: #9ca3af; margin-left: 8px;">☆☆☆</span>
+            <div class="rating-section">
+                <div class="stars-container">
+                    <span class="stars-filled">★★★★★</span>
+                    <span class="stars-empty">☆☆☆☆</span>
                 </div>
                 <div class="rating-text">(4.4) based on 155 reviews</div>
             </div>
@@ -554,7 +519,7 @@
                 <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 12px; margin-right: 8px;"></i> Car Dealerships</a></li>
                 <li><a href="#"><i class="fas fa-chevron-right" style="font-size: 12px; margin-right: 8px;"></i> Enterprise</a></li>
                 
-                <li class="menu-header">Tools & API</li>
+                <li class="menu-category">TOOLS & API</li>
                 <li><a href="#">API Documentation</a></li>
                 <li><a href="#">Integrations, tools & apps</a></li>
                 <li><a href="#">Photoshop Extension</a></li>
@@ -564,103 +529,90 @@
             </ul>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Hero -->
-            <section class="hero">
-                <h1>Remove Background from <span>Image</span> Free</h1>
-                <p>100% Automatically and Free. Remove backgrounds instantly with AI.</p>
-            </section>
+        <!-- Center Content - Main Functionality -->
+        <main class="center-content">
+            <div class="main-heading">
+                <h1>Remove<br>Background<br>from Image<br><span>Free</span></h1>
+                <p class="subhead">100% automatically in 5 seconds</p>
+            </div>
 
-            <!-- Upload -->
-            <section class="upload-section">
-                <div class="upload-box" id="dropZone">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h3>Drag & Drop Your Image</h3>
-                    <p>or click to upload (JPG, PNG, WEBP up to 5MB)</p>
-                    <button class="btn-primary" onclick="document.getElementById('imageInput').click()">
-                        <i class="fas fa-plus"></i> Upload Image
-                    </button>
-                    <input type="file" id="imageInput" accept="image/*" hidden>
+            <!-- Upload Area -->
+            <div class="upload-box" id="dropZone">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
                 </div>
+                <h3>Drag & drop a file or browse</h3>
+                <p>or paste image or URL</p>
+                <button class="btn-primary" onclick="document.getElementById('imageInput').click()">
+                    <i class="fas fa-plus"></i> Upload Image
+                </button>
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <p style="font-size: 12px; color: #9ca3af; margin-top: 16px;">By uploading you agree to Terms</p>
+            </div>
 
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Removing background...</p>
-                </div>
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Removing background...</p>
+            </div>
 
-                <div class="error" id="error">
-                    <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
-                </div>
-            </section>
+            <!-- Error -->
+            <div class="error" id="error">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+            </div>
 
-            <!-- Preview -->
-            <section class="preview-section" id="previewSection">
+            <!-- Preview Section -->
+            <div class="preview-section" id="previewSection">
                 <div class="preview-container">
                     <div class="preview-box">
-                        <h4><i class="fas fa-image"></i> Original</h4>
+                        <h4>Original</h4>
                         <img id="originalImage" src="" alt="Original">
                     </div>
                     <div class="arrow-icon">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                     <div class="preview-box">
-                        <h4><i class="fas fa-check-circle"></i> Result</h4>
+                        <h4>Result</h4>
                         <img id="resultImage" src="" alt="Result">
                     </div>
                 </div>
-                <div class="results-actions">
-                    <a id="downloadBtn" class="btn-download" download="rizwan-bg-removed.png">
+                <div style="text-align: center;">
+                    <a id="downloadBtn" class="btn-download" download="bg-removed.png">
                         <i class="fas fa-download"></i> Download Free
                     </a>
                 </div>
-            </section>
+            </div>
 
             <!-- Trust Badges -->
-            <section class="trust-section">
-                <div class="trust-badges">
-                    <div class="trust-badge">
-                        <i class="fas fa-star"></i> 4.9/5 Rating
-                    </div>
-                    <div class="trust-badge">
-                        <i class="fas fa-users"></i> 50K+ Users
-                    </div>
-                    <div class="trust-badge">
-                        <i class="fas fa-bolt"></i> 5 Sec Processing
-                    </div>
-                    <div class="trust-badge">
-                        <i class="fas fa-shield-alt"></i> 100% Secure
-                    </div>
+            <div class="trust-badges">
+                <div class="trust-item">
+                    <i class="fas fa-star"></i> 4.9/5
                 </div>
-            </section>
+                <div class="trust-item">
+                    <i class="fas fa-users"></i> 50K+ users
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-bolt"></i> 5 sec
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-shield-alt"></i> Secure
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- Footer (Screenshot 2) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-top">
-                <div class="footer-section">
-                    <h4>Product</h4>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Community</h4>
                     <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Integrations</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Blog</a></li>
                         <li><a href="#">Community</a></li>
                         <li><a href="#">Support</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
                         <li><a href="#">About</a></li>
@@ -669,7 +621,7 @@
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="#">Terms of Service</a></li>
@@ -677,6 +629,14 @@
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Cookie Policy</a></li>
                         <li><a href="#">Imprint</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Pricing</a></li>
                     </ul>
                 </div>
             </div>
@@ -693,8 +653,6 @@
 
     <script>
         // ===== JAVASCRIPT WITH NEW API KEY =====
-        
-        // ✅ NEW API KEY (Line 515)
         const API_KEY = 'yH1ZrEYJ5hif6ar3D4Rp6YYn';
         const API_URL = 'https://api.remove.bg/v1.0/removebg';
         
@@ -718,124 +676,4 @@
             dropZone.style.background = '#f0f4ff';
         });
         
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#d1d5db';
-            dropZone.style.background = '#fafafa';
-        });
-        
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#d1d5db';
-            dropZone.style.background = '#fafafa';
-            
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                processImage(file);
-            } else {
-                showError('Please drop an image file');
-            }
-        });
-        
-        // Click Upload
-        dropZone.addEventListener('click', () => {
-            imageInput.click();
-        });
-        
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                processImage(file);
-            }
-        });
-        
-        // Process Image Function
-        async function processImage(file) {
-            // Check file size (5MB limit)
-            if (file.size > 5 * 1024 * 1024) {
-                showError('Image size must be less than 5MB');
-                return;
-            }
-            
-            // Show original image
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                originalImage.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-            
-            // Show loading, hide preview
-            loading.style.display = 'block';
-            previewSection.style.display = 'none';
-            error.style.display = 'none';
-            
-            try {
-                // Prepare form data
-                const formData = new FormData();
-                formData.append('image_file', file);
-                formData.append('size', 'auto');
-                
-                // Call remove.bg API with timeout
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-                
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'X-Api-Key': API_KEY
-                    },
-                    body: formData,
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    const errorData = await response.text();
-                    throw new Error(`API Error ${response.status}: ${errorData}`);
-                }
-                
-                // Get processed image
-                processedBlob = await response.blob();
-                
-                // Show result
-                const resultUrl = URL.createObjectURL(processedBlob);
-                resultImage.src = resultUrl;
-                
-                // Update download button
-                downloadBtn.href = resultUrl;
-                
-                // Show preview section
-                loading.style.display = 'none';
-                previewSection.style.display = 'block';
-                
-            } catch (err) {
-                console.error('Error:', err);
-                loading.style.display = 'none';
-                
-                if (err.name === 'AbortError') {
-                    showError('Request timed out. Please try again.');
-                } else {
-                    showError('Failed to process image. Please check your API key or try again.');
-                }
-            }
-        }
-        
-        function showError(message) {
-            errorText.textContent = message;
-            error.style.display = 'block';
-            setTimeout(() => {
-                error.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Download click handler
-        downloadBtn.addEventListener('click', (e) => {
-            if (!processedBlob) {
-                e.preventDefault();
-                showError('No image to download');
-            }
-        });
-    </script>
-</body>
-</html>
+ 
