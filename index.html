@@ -381,7 +381,7 @@
             color: #fbbf24;
         }
 
-        /* Footer - Updated as per new screenshot */
+        /* Footer */
         .footer {
             background: #f9fafb;
             border-top: 1px solid #e5e5e5;
@@ -463,7 +463,6 @@
             color: #667eea;
         }
 
-        /* Responsive */
         @media (max-width: 1000px) {
             .main-wrapper {
                 flex-direction: column;
@@ -510,7 +509,7 @@
 
     <!-- Main Content -->
     <div class="main-wrapper">
-        <!-- Left Sidebar - Product Hunt & Menu -->
+        <!-- Left Sidebar -->
         <aside class="left-sidebar">
             <div class="product-hunt">
                 <i class="fab fa-product-hunt"></i> PRODUCT HUNT
@@ -539,13 +538,10 @@
                 <li><a href="#">API Documentation</a></li>
                 <li><a href="#">Integrations, tools & apps</a></li>
                 <li><a href="#">Photoshop Extension</a></li>
-                <li><a href="#">Windows / Mac / Linux</a></li>
-                <li><a href="#">Android App</a></li>
-                <li><a href="#">Design Templates</a></li>
             </ul>
         </aside>
 
-        <!-- Center Content - Main Functionality -->
+        <!-- Center Content -->
         <main class="center-content">
             <div class="main-heading">
                 <h1>Remove<br>Background<br>from Image<br><span>Free</span></h1>
@@ -617,11 +613,10 @@
         </main>
     </div>
 
-    <!-- Footer - Updated as per new screenshot -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-grid">
-                <!-- Legal Section -->
                 <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
@@ -632,7 +627,6 @@
                         <li><a href="#">Imprint</a></li>
                     </ul>
                 </div>
-                <!-- Empty columns for spacing (as per screenshot, only Legal section appears) -->
                 <div class="footer-col"></div>
                 <div class="footer-col"></div>
                 <div class="footer-col"></div>
@@ -654,11 +648,9 @@
     </footer>
 
     <script>
-        // ===== JAVASCRIPT WITH API KEY =====
         const API_KEY = 'yH1ZrEYJ5hif6ar3D4Rp6YYn';
         const API_URL = 'https://api.remove.bg/v1.0/removebg';
         
-        // DOM Elements
         const dropZone = document.getElementById('dropZone');
         const imageInput = document.getElementById('imageInput');
         const loading = document.getElementById('loading');
@@ -671,7 +663,6 @@
         
         let processedBlob = null;
         
-        // Drag & Drop Events
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropZone.style.borderColor = '#667eea';
