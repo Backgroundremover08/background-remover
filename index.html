@@ -381,7 +381,7 @@
             color: #fbbf24;
         }
 
-        /* Footer */
+        /* Footer - Updated as per new screenshot */
         .footer {
             background: #f9fafb;
             border-top: 1px solid #e5e5e5;
@@ -433,22 +433,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #9ca3af;
-            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .footer-links {
+        .footer-copyright {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .footer-copyright a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer-legal-links {
             display: flex;
             gap: 30px;
         }
 
-        .footer-links a {
+        .footer-legal-links a {
             color: #6b7280;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
+            transition: color 0.2s;
         }
 
-        .footer-links a:hover {
+        .footer-legal-links a:hover {
             color: #667eea;
         }
 
@@ -468,6 +479,11 @@
             
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -601,58 +617,44 @@
         </main>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer - Updated as per new screenshot -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
+                <!-- Legal Section -->
                 <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">General Terms</a></li>
+                        <li><a href="#">General Terms and Conditions</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Cookie Policy</a></li>
                         <li><a href="#">Imprint</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">API</a></li>
-                        <li><a href="#">Pricing</a></li>
-                    </ul>
-                </div>
+                <!-- Empty columns for spacing (as per screenshot, only Legal section appears) -->
+                <div class="footer-col"></div>
+                <div class="footer-col"></div>
+                <div class="footer-col"></div>
             </div>
+            
             <div class="footer-bottom">
-                <p>© remove.bg, a Canva Austria GmbH brand - Rizwan's Pro Edition</p>
-                <div class="footer-links">
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">Cookies</a>
+                <div class="footer-copyright">
+                    © remove.bg, a Canva Austria GmbH brand
+                </div>
+                <div class="footer-legal-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">General Terms and Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Imprint</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // ===== JAVASCRIPT WITH NEW API KEY =====
+        // ===== JAVASCRIPT WITH API KEY =====
         const API_KEY = 'yH1ZrEYJ5hif6ar3D4Rp6YYn';
         const API_URL = 'https://api.remove.bg/v1.0/removebg';
         
@@ -676,4 +678,90 @@
             dropZone.style.background = '#f0f4ff';
         });
         
- 
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#d1d5db';
+            dropZone.style.background = '#fafafa';
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#d1d5db';
+            dropZone.style.background = '#fafafa';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processImage(file);
+            } else {
+                showError('Please drop an image file');
+            }
+        });
+        
+        dropZone.addEventListener('click', () => {
+            imageInput.click();
+        });
+        
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                processImage(file);
+            }
+        });
+        
+        async function processImage(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showError('Image size must be less than 5MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            
+            loading.style.display = 'block';
+            previewSection.style.display = 'none';
+            error.style.display = 'none';
+            
+            try {
+                const formData = new FormData();
+                formData.append('image_file', file);
+                formData.append('size', 'auto');
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'X-Api-Key': API_KEY },
+                    body: formData,
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error(`API Error ${response.status}`);
+                
+                processedBlob = await response.blob();
+                const resultUrl = URL.createObjectURL(processedBlob);
+                resultImage.src = resultUrl;
+                downloadBtn.href = resultUrl;
+                
+                loading.style.display = 'none';
+                previewSection.style.display = 'block';
+                
+            } catch (err) {
+                loading.style.display = 'none';
+                showError('Failed to process image. Check API key.');
+            }
+        }
+        
+        function showError(message) {
+            errorText.textContent = message;
+            error.style.display = 'block';
+            setTimeout(() => error.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>
