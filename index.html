@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RiZo KiNg 👑 | Secure Terminal</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -16,10 +14,11 @@
         body {
             background: #000;
             color: #0f0;
-            font-family: 'Fira Code', monospace;
+            font-family: 'Courier New', monospace;
             overflow: hidden;
             height: 100vh;
-            cursor: text;
+            font-size: 16px;
+            line-height: 1.4;
         }
 
         #terminal {
@@ -28,16 +27,12 @@
             overflow-y: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
-            font-size: 16px;
-            line-height: 1.4;
-            position: relative;
-            z-index: 10;
         }
 
         .cursor {
             display: inline-block;
             width: 12px;
-            height: 20px;
+            height: 18px;
             background: #0f0;
             animation: blink 0.8s infinite;
             vertical-align: middle;
@@ -49,35 +44,39 @@
             51%, 100% { opacity: 0; }
         }
 
-        .access-popup {
+        .popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
-            border: 3px solid #0f0;
-            padding: 40px;
+            background: #000;
+            border: 4px solid #0f0;
+            padding: 50px;
             text-align: center;
-            font-size: 2rem;
-            color: #0f0;
+            font-size: 2.5rem;
+            font-weight: bold;
             display: none;
             z-index: 1000;
             box-shadow: 0 0 50px #0f0;
             animation: glitch 0.3s infinite;
         }
 
-        .access-denied {
+        .denied {
             border-color: #f00;
             color: #f00;
             box-shadow: 0 0 50px #f00;
         }
 
+        .granted {
+            color: #0f0;
+        }
+
         @keyframes glitch {
             0% { transform: translate(-50%, -50%) translate(0) }
-            20% { transform: translate(-50%, -50%) translate(-2px, 2px) }
-            40% { transform: translate(-50%, -50%) translate(-2px, -2px) }
-            60% { transform: translate(-50%, -50%) translate(2px, 2px) }
-            80% { transform: translate(-50%, -50%) translate(2px, -2px) }
+            20% { transform: translate(-50%, -50%) translate(-3px, 3px) }
+            40% { transform: translate(-50%, -50%) translate(-3px, -3px) }
+            60% { transform: translate(-50%, -50%) translate(3px, 3px) }
+            80% { transform: translate(-50%, -50%) translate(3px, -3px) }
             100% { transform: translate(-50%, -50%) translate(0) }
         }
 
@@ -87,22 +86,20 @@
             right: 20px;
             font-size: 1.5rem;
             color: #0f0;
-            opacity: 0.7;
+            opacity: 0.8;
             z-index: 100;
             text-shadow: 0 0 10px #0f0;
-        }
-
-        .crown {
-            font-size: 2rem;
+            pointer-events: none;
         }
 
         .start-msg {
             color: #0f0;
             margin-bottom: 10px;
+            opacity: 0.8;
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -115,31 +112,30 @@
     </style>
 </head>
 <body>
-    <div class="watermark">
-        <span class="crown">👑</span> RiZo KiNg
-    </div>
-
+    <div class="watermark">👑 RiZo KiNg</div>
+    
     <div id="terminal">
         <div class="start-msg">RiZo KiNg Secure Terminal v9.9 [AUTHORIZED ACCESS ONLY]</div>
-        <div class="start-msg">Type anywhere to begin hacking sequence...</div>
-        <div class="start-msg">Press ALT three times for ACCESS GRANTED</div>
-        <div class="start-msg">Press SHIFT three times for ACCESS DENIED</div>
+        <div class="start-msg">Server: Online | Encryption: AES-256 | Status: Monitoring</div>
+        <div class="start-msg">Type anywhere to initiate hack sequence...</div>
+        <div class="start-msg">Press ALT x3 for ACCESS GRANTED | SHIFT x3 for ACCESS DENIED</div>
         <br>
-        <span id="text"></span><span class="cursor"></span>
+        <span id="output"></span><span class="cursor"></span>
     </div>
 
-    <div class="access-popup" id="granted">
-        <div style="font-size: 3rem;">ACCESS GRANTED</div>
-        <div style="font-size: 1rem; margin-top: 10px;">Welcome, RiZo KiNg 👑</div>
+    <div class="popup granted" id="granted">
+        ACCESS GRANTED<br>
+        <span style="font-size: 1.2rem;">Welcome, RiZo KiNg 👑</span>
     </div>
 
-    <div class="access-popup access-denied" id="denied">
-        <div style="font-size: 3rem;">ACCESS DENIED</div>
-        <div style="font-size: 1rem; margin-top: 10px;">Intruder Alert!</div>
+    <div class="popup denied" id="denied">
+        ACCESS DENIED<br>
+        <span style="font-size: 1.2rem;">Intruder Alert!</span>
     </div>
 
     <script>
-        const codeSnippets = [
+        // Code snippets database
+        var codeSnippets = [
             "Connecting to mainframe...",
             "Bypassing firewall...",
             "Decrypting AES-256 encryption...",
@@ -175,7 +171,7 @@
             "Transferring funds... [BLOCKED]",
             "Deleting evidence...",
             "Installing keylogger...",
-            " Hijacking camera feed...",
+            "Hijacking camera feed...",
             "Recording audio stream...",
             "Tracking GPS location...",
             "Mining cryptocurrency...",
@@ -251,78 +247,87 @@
             "Log out sequence initiated..."
         ];
 
-        const textSpan = document.getElementById('text');
-        let altCount = 0;
-        let shiftCount = 0;
-        let lastAltTime = 0;
-        let lastShiftTime = 0;
+        var output = document.getElementById('output');
+        var altCount = 0;
+        var shiftCount = 0;
+        var lastAltTime = 0;
+        var lastShiftTime = 0;
 
-        document.addEventListener('keydown', (e) => {
-            // Prevent default for most keys to keep focus
-            if (e.key !== 'F5' && e.key !== 'F12' && !e.ctrlKey) {
+        document.addEventListener('keydown', function(e) {
+            // Prevent default scrolling with space/arrows
+            if(e.key !== 'F5' && e.key !== 'F12') {
                 e.preventDefault();
             }
 
-            // Handle special keys
-            if (e.key === 'Alt') {
-                const now = Date.now();
-                if (now - lastAltTime < 1000) {
+            // Handle Alt key (3 times = Access Granted)
+            if(e.key === 'Alt') {
+                var now = Date.now();
+                if(now - lastAltTime < 1000) {
                     altCount++;
                 } else {
                     altCount = 1;
                 }
                 lastAltTime = now;
                 
-                if (altCount >= 3) {
+                if(altCount >= 3) {
                     showPopup('granted');
                     altCount = 0;
                 }
                 return;
             }
 
-            if (e.key === 'Shift') {
-                const now = Date.now();
-                if (now - lastShiftTime < 1000) {
+            // Handle Shift key (3 times = Access Denied)
+            if(e.key === 'Shift') {
+                var now = Date.now();
+                if(now - lastShiftTime < 1000) {
                     shiftCount++;
                 } else {
                     shiftCount = 1;
                 }
                 lastShiftTime = now;
                 
-                if (shiftCount >= 3) {
+                if(shiftCount >= 3) {
                     showPopup('denied');
                     shiftCount = 0;
                 }
                 return;
             }
 
-            // Type random code snippet
-            const randomCode = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            const timestamp = new Date().toLocaleTimeString();
-            textSpan.innerHTML += `[${timestamp}] ${randomCode}\n`;
+            // Handle Escape to close popups
+            if(e.key === 'Escape') {
+                document.getElementById('granted').style.display = 'none';
+                document.getElementById('denied').style.display = 'none';
+                return;
+            }
+
+            // Add random code snippet
+            var randomIndex = Math.floor(Math.random() * codeSnippets.length);
+            var randomCode = codeSnippets[randomIndex];
+            var timestamp = new Date().toLocaleTimeString();
             
-            // Auto scroll
+            output.innerHTML += '[' + timestamp + '] ' + randomCode + '\n';
+            
+            // Auto scroll to bottom
             window.scrollTo(0, document.body.scrollHeight);
         });
 
         function showPopup(id) {
-            const popup = document.getElementById(id);
+            var popup = document.getElementById(id);
             popup.style.display = 'block';
             
-            // Play sound effect (optional - browser policy may block)
-            // const audio = new Audio(id === 'granted' ? 'success.mp3' : 'error.mp3');
-            // audio.play().catch(e => console.log('Audio blocked'));
-            
-            setTimeout(() => {
+            // Hide after 2 seconds
+            setTimeout(function() {
                 popup.style.display = 'none';
             }, 2000);
         }
 
-        // Prevent context menu
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        
-        // Auto focus
-        window.onload = () => {
+        // Prevent right click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Focus body on load
+        window.onload = function() {
             document.body.focus();
         };
     </script>
