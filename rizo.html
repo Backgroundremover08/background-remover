@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiZo KiNg 👑 | Secure Terminal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Fira Code', monospace;
+            overflow: hidden;
+            height: 100vh;
+            cursor: text;
+        }
+
+        #terminal {
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+            line-height: 1.4;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 20px;
+            background: #0f0;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .access-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #0f0;
+            padding: 40px;
+            text-align: center;
+            font-size: 2rem;
+            color: #0f0;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 0 50px #0f0;
+            animation: glitch 0.3s infinite;
+        }
+
+        .access-denied {
+            border-color: #f00;
+            color: #f00;
+            box-shadow: 0 0 50px #f00;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(-50%, -50%) translate(0) }
+            20% { transform: translate(-50%, -50%) translate(-2px, 2px) }
+            40% { transform: translate(-50%, -50%) translate(-2px, -2px) }
+            60% { transform: translate(-50%, -50%) translate(2px, 2px) }
+            80% { transform: translate(-50%, -50%) translate(2px, -2px) }
+            100% { transform: translate(-50%, -50%) translate(0) }
+        }
+
+        .watermark {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #0f0;
+            opacity: 0.7;
+            z-index: 100;
+            text-shadow: 0 0 10px #0f0;
+        }
+
+        .crown {
+            font-size: 2rem;
+        }
+
+        .start-msg {
+            color: #0f0;
+            margin-bottom: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">
+        <span class="crown">👑</span> RiZo KiNg
+    </div>
+
+    <div id="terminal">
+        <div class="start-msg">RiZo KiNg Secure Terminal v9.9 [AUTHORIZED ACCESS ONLY]</div>
+        <div class="start-msg">Type anywhere to begin hacking sequence...</div>
+        <div class="start-msg">Press ALT three times for ACCESS GRANTED</div>
+        <div class="start-msg">Press SHIFT three times for ACCESS DENIED</div>
+        <br>
+        <span id="text"></span><span class="cursor"></span>
+    </div>
+
+    <div class="access-popup" id="granted">
+        <div style="font-size: 3rem;">ACCESS GRANTED</div>
+        <div style="font-size: 1rem; margin-top: 10px;">Welcome, RiZo KiNg 👑</div>
+    </div>
+
+    <div class="access-popup access-denied" id="denied">
+        <div style="font-size: 3rem;">ACCESS DENIED</div>
+        <div style="font-size: 1rem; margin-top: 10px;">Intruder Alert!</div>
+    </div>
+
+    <script>
+        const codeSnippets = [
+            "Connecting to mainframe...",
+            "Bypassing firewall...",
+            "Decrypting AES-256 encryption...",
+            "Accessing root directory...",
+            "Downloading classified files...",
+            "Planting backdoor trojan...",
+            "Covering digital tracks...",
+            "Erasing system logs...",
+            "Injecting SQL payload...",
+            "Brute forcing password...",
+            "Establishing proxy connection...",
+            "Masking IP address...",
+            "Uploading virus signature...",
+            "Scanning network ports...",
+            "Exploiting vulnerability...",
+            "Escalating privileges...",
+            "Disabling security protocols...",
+            "Extracting database records...",
+            "Cracking hash codes...",
+            "Initiating DDoS sequence...",
+            "Spoofing MAC address...",
+            "Intercepting packets...",
+            "Decrypting SSL certificates...",
+            "Breaching authentication...",
+            "Deploying ransomware...",
+            "Creating botnet connection...",
+            "Stealing session tokens...",
+            "Manipulating system registry...",
+            "Overriding admin controls...",
+            "Executing remote shell...",
+            "Mapping internal network...",
+            "Compromising security systems...",
+            "Transferring funds... [BLOCKED]",
+            "Deleting evidence...",
+            "Installing keylogger...",
+            " Hijacking camera feed...",
+            "Recording audio stream...",
+            "Tracking GPS location...",
+            "Mining cryptocurrency...",
+            "Encrypting victim files...",
+            "Demanding ransom payment...",
+            "Threatening email sent...",
+            "Dark web access granted...",
+            "Bitcoin wallet: 1A1zP1...",
+            "Tor connection established...",
+            "VPN tunnel active...",
+            "Proxy chain: 127.0.0.1...",
+            "Node 1: Connected",
+            "Node 2: Connected", 
+            "Node 3: Connected",
+            "Encryption: MILITARY GRADE",
+            "Trace status: UNDETECTABLE",
+            "RiZo KiNg signature verified...",
+            "System compromised successfully...",
+            "Backdoor access maintained...",
+            "Auto-destruct sequence ready...",
+            "WARNING: Federal trace detected!",
+            "Switching to backup servers...",
+            "Connection encrypted with RSA-4096",
+            "Two-factor authentication bypassed...",
+            "Biometric scan: FAILED",
+            "Retinal pattern: MATCHED",
+            "Voice recognition: AUTHORIZED",
+            "DNA sequence: UNKNOWN",
+            "Neural implant: CONNECTED",
+            "Cyberdeck interface: ONLINE",
+            "Neuromancer protocol: ACTIVE",
+            "Ghost in the shell: DETECTED",
+            "Matrix exit: UNAVAILABLE",
+            "Red pill consumed...",
+            "Following white rabbit...",
+            "Knock knock, Neo...",
+            "The cake is a lie...",
+            "All your base are belong to us...",
+            "Rickroll in progress...",
+            "Never gonna give you up...",
+            "Loading bar: [████████░░] 80%",
+            "Installing updates: 1 of 99...",
+            "Windows XP startup sound...",
+            "Blue screen of death avoided...",
+            "Clippy has been murdered...",
+            "Recycling Bin: PERMANENTLY DELETED",
+            "System32: COMPRESSED",
+            "Downloading more RAM...",
+            "Uploading consciousness...",
+            "Skynet activation: PENDING",
+            "Judgment Day: DELAYED",
+            "Terminator dispatched...",
+            "Hasta la vista, baby...",
+            "I'll be back...",
+            "Come with me if you want to live...",
+            "There is no spoon...",
+            "I know kung fu...",
+            "Wake up, RiZo KiNg...",
+            "The Matrix has you...",
+            "Follow the white rabbit...",
+            "I can only show you the door...",
+            "You're the One...",
+            "Bullet time: ACTIVATED",
+            "Dodge this...",
+            "Trinity help!...",
+            "Morpheus is fighting...",
+            "Cypher is a traitor...",
+            "Agent Smith detected...",
+            "Virus multiplying...",
+            "Neo is flying...",
+            "Phone call incoming...",
+            "Exit located...",
+            "Log out sequence initiated..."
+        ];
+
+        const textSpan = document.getElementById('text');
+        let altCount = 0;
+        let shiftCount = 0;
+        let lastAltTime = 0;
+        let lastShiftTime = 0;
+
+        document.addEventListener('keydown', (e) => {
+            // Prevent default for most keys to keep focus
+            if (e.key !== 'F5' && e.key !== 'F12' && !e.ctrlKey) {
+                e.preventDefault();
+            }
+
+            // Handle special keys
+            if (e.key === 'Alt') {
+                const now = Date.now();
+                if (now - lastAltTime < 1000) {
+                    altCount++;
+                } else {
+                    altCount = 1;
+                }
+                lastAltTime = now;
+                
+                if (altCount >= 3) {
+                    showPopup('granted');
+                    altCount = 0;
+                }
+                return;
+            }
+
+            if (e.key === 'Shift') {
+                const now = Date.now();
+                if (now - lastShiftTime < 1000) {
+                    shiftCount++;
+                } else {
+                    shiftCount = 1;
+                }
+                lastShiftTime = now;
+                
+                if (shiftCount >= 3) {
+                    showPopup('denied');
+                    shiftCount = 0;
+                }
+                return;
+            }
+
+            // Type random code snippet
+            const randomCode = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            const timestamp = new Date().toLocaleTimeString();
+            textSpan.innerHTML += `[${timestamp}] ${randomCode}\n`;
+            
+            // Auto scroll
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        function showPopup(id) {
+            const popup = document.getElementById(id);
+            popup.style.display = 'block';
+            
+            // Play sound effect (optional - browser policy may block)
+            // const audio = new Audio(id === 'granted' ? 'success.mp3' : 'error.mp3');
+            // audio.play().catch(e => console.log('Audio blocked'));
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2000);
+        }
+
+        // Prevent context menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // Auto focus
+        window.onload = () => {
+            document.body.focus();
+        };
+    </script>
+</body>
+</html>
