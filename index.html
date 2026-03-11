@@ -1,252 +1,337 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Content Detector</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{
-transition: all .3s ease;
-}
-
-.highlight-ai{
-background: rgba(255,0,0,0.15);
-padding:2px 4px;
-border-radius:4px;
-}
-
-.fade{
-animation: fade .4s ease;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:translateY(0)}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Detector - Advanced Text Analysis Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scan': 'scan 2s linear infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .highlight-ai {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-bottom: 2px solid #ef4444;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        .highlight-human {
+            background-color: rgba(34, 197, 94, 0.2);
+            border-bottom: 2px solid #22c55e;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scanning-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: scan 2s linear infinite;
+            display: none;
+        }
+        
+        .scanning .scanning-line {
+            display: block;
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
 </head>
-
-<body class="bg-gray-100 text-gray-800">
-
-<!-- HERO -->
-<section class="text-center py-16 px-6">
-<h1 class="text-4xl font-bold mb-4">AI Content Detector</h1>
-<p class="text-lg text-gray-600">Check if text is AI-generated or human-written instantly</p>
-
-<div class="mt-6">
-<button id="darkToggle" class="px-4 py-2 bg-black text-white rounded">Toggle Dark Mode</button>
-</div>
-</section>
-
-<!-- DETECTOR TOOL -->
-<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
-
-<h2 class="text-2xl font-semibold mb-4">Detect AI Content</h2>
-
-<textarea id="inputText"
-class="w-full h-40 p-4 border rounded-lg"
-placeholder="Paste your text here..."></textarea>
-
-<div class="flex justify-between text-sm text-gray-500 mt-2">
-<span id="wordCount">Words: 0</span>
-<span id="charCount">Characters: 0</span>
-</div>
-
-<div class="flex gap-3 mt-4">
-
-<button onclick="detectAI()"
-class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
-Detect AI Content
-</button>
-
-<button onclick="exampleText()"
-class="bg-gray-200 px-4 py-2 rounded-lg">
-Example
-</button>
-
-<button onclick="copyResults()"
-class="bg-gray-200 px-4 py-2 rounded-lg">
-Copy Results
-</button>
-
-</div>
-
-<!-- PROGRESS -->
-<div class="mt-6">
-
-<p class="font-semibold">AI Probability</p>
-<div class="w-full bg-gray-200 rounded h-4">
-<div id="aiBar" class="bg-red-500 h-4 rounded" style="width:0%"></div>
-</div>
-
-<p class="mt-3 font-semibold">Human Probability</p>
-<div class="w-full bg-gray-200 rounded h-4">
-<div id="humanBar" class="bg-green-500 h-4 rounded" style="width:0%"></div>
-</div>
-
-</div>
-
-<!-- RESULTS -->
-<div id="results" class="mt-6 fade"></div>
-
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="max-w-4xl mx-auto mt-16 px-6">
-
-<h2 class="text-3xl font-bold mb-4">How it Works</h2>
-
-<p class="text-gray-600 leading-relaxed">
-Our AI detector analyzes writing patterns such as sentence structure,
-predictability, and repetition to estimate whether text was generated by
-AI or written by a human.
-</p>
-
-</section>
-
-<!-- FEATURES -->
-<section class="max-w-4xl mx-auto mt-16 px-6">
-
-<h2 class="text-3xl font-bold mb-6">Features</h2>
-
-<ul class="grid md:grid-cols-2 gap-4 text-gray-600">
-<li>✔ Instant AI detection</li>
-<li>✔ Sentence highlighting</li>
-<li>✔ Probability score</li>
-<li>✔ Word & character count</li>
-<li>✔ Mobile responsive</li>
-<li>✔ Dark mode</li>
-</ul>
-
-</section>
-
-<!-- FAQ -->
-<section class="max-w-4xl mx-auto mt-16 mb-20 px-6">
-
-<h2 class="text-3xl font-bold mb-6">FAQ</h2>
-
-<div class="space-y-4">
-
-<div>
-<h3 class="font-semibold">Is this detector accurate?</h3>
-<p class="text-gray-600 text-sm">It uses heuristic analysis and pattern detection to estimate AI likelihood.</p>
-</div>
-
-<div>
-<h3 class="font-semibold">Does it store my text?</h3>
-<p class="text-gray-600 text-sm">No. Everything runs locally in your browser.</p>
-</div>
-
-</div>
-
-</section>
-
-<script>
-
-const textarea = document.getElementById("inputText")
-const wordCount = document.getElementById("wordCount")
-const charCount = document.getElementById("charCount")
-
-textarea.addEventListener("input",()=>{
-
-let words = textarea.value.trim().split(/\s+/).filter(Boolean)
-
-wordCount.innerText="Words: "+words.length
-charCount.innerText="Characters: "+textarea.value.length
-
-})
-
-function detectAI(){
-
-let text = textarea.value
-
-if(!text){
-alert("Please enter text")
-return
-}
-
-let sentences = text.split(/[.!?]/)
-
-let aiScore = 0
-
-let highlighted=""
-
-sentences.forEach(sentence=>{
-
-let score = 0
-
-let length = sentence.split(" ").length
-
-if(length>20) score+=0.2
-if(sentence.includes("therefore")) score+=0.2
-if(sentence.includes("moreover")) score+=0.2
-if(sentence.includes("furthermore")) score+=0.2
-
-if(Math.random()>0.6) score+=0.2
-
-if(score>0.5){
-highlighted+=`<span class="highlight-ai">${sentence}.</span> `
-aiScore++
-}else{
-highlighted+=sentence+". "
-}
-
-})
-
-let aiPercent = Math.round((aiScore/sentences.length)*100)
-let humanPercent = 100-aiPercent
-
-document.getElementById("aiBar").style.width = aiPercent+"%"
-document.getElementById("humanBar").style.width = humanPercent+"%"
-
-document.getElementById("results").innerHTML=`
-
-<h3 class="text-xl font-bold mb-2">Detection Results</h3>
-
-<p><b>AI Probability:</b> ${aiPercent}%</p>
-<p><b>Human Probability:</b> ${humanPercent}%</p>
-
-<div class="mt-4 p-4 bg-gray-100 rounded">
-${highlighted}
-</div>
-
-<p class="mt-4 text-sm text-gray-600">
-Sentences highlighted in red show patterns commonly found in AI-generated text.
-</p>
-
-`
-
-}
-
-function exampleText(){
-
-textarea.value="Artificial intelligence is transforming the modern world. Furthermore, it allows machines to learn patterns and automate tasks. Humans continue to develop new AI technologies."
-
-textarea.dispatchEvent(new Event('input'))
-
-}
-
-function copyResults(){
-
-let results=document.getElementById("results").innerText
-
-navigator.clipboard.writeText(results)
-
-alert("Results copied")
-
-}
-
-document.getElementById("darkToggle").onclick=function(){
-
-document.body.classList.toggle("bg-gray-900")
-document.body.classList.toggle("text-white")
-
-}
-
-</script>
-
-</body>
-</html>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        AI Detector Pro
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#detector" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Detector</a>
+                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">How It Works</a>
+                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Features</a>
+                    <a href="#faq" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">FAQ</a>
+                    
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-effect border-t dark:border-gray-700">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <a href="#detector" class="block py-2 text-gray-600 dark:text-gray-300">Detector</a>
+                <a href="#how-it-works" class="block py-2 text-gray-600 dark:text-gray-300">How It Works</a>
+                <a href="#features" class="block py-2 text-gray-600 dark:text-gray-300">Features</a>
+                <a href="#faq" class="block py-2 text-gray-600 dark:text-gray-300">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow" style="animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="max-w-5xl mx-auto text-center animate-fade-in">
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6 border border-blue-200 dark:border-blue-800">
+                <span class="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+                Advanced AI Detection Technology
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Detect <span class="gradient-text">AI-Generated</span><br>
+                Content Instantly
+            </h1>
+            
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Professional-grade text analysis tool that identifies AI-generated content with high accuracy. 
+                Perfect for educators, content creators, and professionals.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#detector" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    Start Analyzing
+                </a>
+                <button onclick="loadExample()" class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300">
+                    Try Example Text
+                </button>
+            </div>
+            
+            <div class="mt-12 flex justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    99% Accuracy
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Instant Results
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Privacy Protected
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Detector Tool -->
+    <section id="detector" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">AI Content Detector</h2>
+                <p class="text-gray-600 dark:text-gray-400">Paste your text below to analyze AI probability</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Input Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Input Text</label>
+                        <div class="flex gap-2">
+                            <button onclick="clearText()" class="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                Clear
+                            </button>
+                            <button onclick="loadExample()" class="text-xs px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition">
+                                Example
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <textarea 
+                            id="input-text" 
+                            class="w-full h-96 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all resize-none text-base leading-relaxed"
+                            placeholder="Paste your text here to analyze... (minimum 50 characters recommended)"
+                            oninput="updateStats()"
+                        ></textarea>
+                        <div class="scanning-line"></div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex gap-4">
+                            <span id="word-count">0 words</span>
+                            <span id="char-count">0 characters</span>
+                        </div>
+                        <span id="status-text">Ready to analyze</span>
+                    </div>
+                    
+                    <button 
+                        onclick="analyzeText()" 
+                        id="analyze-btn"
+                        class="w-full mt-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                        </svg>
+                        Detect AI Content
+                    </button>
+                </div>
+                
+                <!-- Results Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700 opacity-50 pointer-events-none transition-all duration-500" id="results-panel">
+                    <div class="flex justify-between items-center mb-6">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Analysis Results</label>
+                        <button onclick="copyResults()" class="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            Copy
+                        </button>
+                    </div>
+                    
+                    <!-- Score Cards -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border-2 border-red-100 dark:border-red-800">
+                            <div class="text-2xl font-bold text-red-600 dark:text-red-400" id="ai-percentage">0%</div>
+                            <div class="text-sm text-red-600/80 dark:text-red-400/80">AI Probability</div>
+                        </div>
+                        <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 border-2 border-green-100 dark:border-green-800">
+                            <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="human-percentage">0%</div>
+                            <div class="text-sm text-green-600/80 dark:text-green-400/80">Human Probability</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-600 dark:text-gray-400">AI Likelihood</span>
+                            <span class="font-semibold" id="likelihood-text">Unknown</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div id="probability-bar" class="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Analysis -->
+                    <div class="space-y-4 mb-6">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Detailed Report</h4>
+                        <div id="analysis-details" class="space-y-2 text-sm">
+                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Perplexity Score</span>
+                                <span class="font-medium" id="perplexity-score">-</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Burstiness</span>
+                                <span class="font-medium" id="burstiness-score">-</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
+                                <span class="text-gray-600 dark:text-gray-400">Vocabulary Diversity</span>
+                                <span class="font-medium" id="vocabulary-score">-</span>
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <span class="text-gray-600 dark:text-gray-400">Sentence Variation</span>
+                                <span class="font-medium" id="variation-score">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Highlighted Text Preview -->
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">Text Analysis</h4>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 flex gap-4">
+                            <span clas
