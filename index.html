@@ -3,53 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Content Detector - Advanced Text Analysis Tool</title>
+    <title>Pro BG Remover - AI-Powered Background Removal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.5s ease-in-out',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'scan': 'scan 2s linear infinite',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { transform: 'translateY(20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
-                        },
-                        scan: {
-                            '0%': { transform: 'translateY(-100%)' },
-                            '100%': { transform: 'translateY(100%)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
         
         .gradient-text {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -69,46 +27,151 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .highlight-ai {
-            background-color: rgba(239, 68, 68, 0.2);
-            border-bottom: 2px solid #ef4444;
-            padding: 2px 4px;
-            border-radius: 4px;
+        .drop-zone {
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23CBD5E1FF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
         }
         
-        .highlight-human {
-            background-color: rgba(34, 197, 94, 0.2);
-            border-bottom: 2px solid #22c55e;
-            padding: 2px 4px;
-            border-radius: 4px;
+        .dark .drop-zone {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%234B5563FF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
         }
         
-        .progress-bar {
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        .drop-zone.dragover {
+            background-color: rgba(59, 130, 246, 0.1);
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%233B82F6FF' stroke-width='3' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            transform: scale(1.02);
         }
         
-        .scanning-line {
+        .slider-thumb::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .compare-slider {
             position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-            animation: scan 2s linear infinite;
-            display: none;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: white;
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 10;
         }
         
-        .scanning .scanning-line {
-            display: block;
+        .compare-slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .feature-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .compare-slider::after {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
         }
         
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .loading-spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .canvas-container {
+            background-image: 
+                linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        .dark .canvas-container {
+            background-image: 
+                linear-gradient(45deg, #2a2a2a 25%, transparent 25%), 
+                linear-gradient(-45deg, #2a2a2a 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #2a2a2a 75%), 
+                linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+        }
+        
+        .tool-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .tool-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1);
+        }
+        
+        .tool-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .magic-wand-cursor {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'%3E%3C/path%3E%3C/svg%3E") 12 12, auto;
+        }
+        
+        .brush-cursor {
+            cursor: crosshair;
+        }
+        
+        .eraser-cursor {
+            cursor: cell;
         }
     </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <!-- Navigation -->
@@ -116,21 +179,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        AI Detector Pro
+                    <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        Pro BG Remover
                     </span>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#detector" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Detector</a>
-                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">How It Works</a>
-                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Features</a>
-                    <a href="#faq" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">FAQ</a>
+                    <a href="#editor" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">Editor</a>
+                    <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition">How It Works</a>
                     
                     <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                         <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,22 +203,6 @@
                         </svg>
                     </button>
                 </div>
-                
-                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-effect border-t dark:border-gray-700">
-            <div class="px-4 pt-2 pb-4 space-y-2">
-                <a href="#detector" class="block py-2 text-gray-600 dark:text-gray-300">Detector</a>
-                <a href="#how-it-works" class="block py-2 text-gray-600 dark:text-gray-300">How It Works</a>
-                <a href="#features" class="block py-2 text-gray-600 dark:text-gray-300">Features</a>
-                <a href="#faq" class="block py-2 text-gray-600 dark:text-gray-300">FAQ</a>
             </div>
         </div>
     </nav>
@@ -164,174 +210,148 @@
     <!-- Hero Section -->
     <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div class="absolute inset-0 -z-10">
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
-            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow" style="animation-delay: 1s;"></div>
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow" style="animation-delay: 1s;"></div>
         </div>
         
         <div class="max-w-5xl mx-auto text-center animate-fade-in">
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6 border border-blue-200 dark:border-blue-800">
-                <span class="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-                Advanced AI Detection Technology
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-medium mb-6 border border-purple-200 dark:border-purple-800">
+                <span class="flex h-2 w-2 rounded-full bg-purple-600 mr-2 animate-pulse"></span>
+                100% Free - No API Key Required
             </div>
             
             <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Detect <span class="gradient-text">AI-Generated</span><br>
-                Content Instantly
+                Remove Image<br>
+                <span class="gradient-text">Backgrounds Instantly</span>
             </h1>
             
             <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Professional-grade text analysis tool that identifies AI-generated content with high accuracy. 
-                Perfect for educators, content creators, and professionals.
+                Professional-grade background removal using advanced AI algorithms. 
+                Works entirely in your browser - no uploads, no subscriptions, 100% private.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#detector" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                <a href="#editor" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    Start Analyzing
+                    Start Removing Background
                 </a>
-                <button onclick="loadExample()" class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300">
-                    Try Example Text
-                </button>
-            </div>
-            
-            <div class="mt-12 flex justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
-                <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    99% Accuracy
-                </div>
-                <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant Results
-                </div>
-                <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Privacy Protected
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Detector Tool -->
-    <section id="detector" class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">AI Content Detector</h2>
-                <p class="text-gray-600 dark:text-gray-400">Paste your text below to analyze AI probability</p>
-            </div>
+    <!-- Main Editor Section -->
+    <section id="editor" class="py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
             
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Input Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
-                    <div class="flex justify-between items-center mb-4">
-                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Input Text</label>
-                        <div class="flex gap-2">
-                            <button onclick="clearText()" class="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-                                Clear
-                            </button>
-                            <button onclick="loadExample()" class="text-xs px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition">
-                                Example
-                            </button>
-                        </div>
-                    </div>
+            <!-- Upload Area -->
+            <div id="upload-section" class="mb-8">
+                <div 
+                    id="drop-zone"
+                    class="drop-zone rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+                    onclick="document.getElementById('file-input').click()"
+                    ondrop="handleDrop(event)" 
+                    ondragover="handleDragOver(event)"
+                    ondragleave="handleDragLeave(event)"
+                >
+                    <input type="file" id="file-input" class="hidden" accept="image/*" onchange="handleFileSelect(event)">
                     
-                    <div class="relative">
-                        <textarea 
-                            id="input-text" 
-                            class="w-full h-96 p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all resize-none text-base leading-relaxed"
-                            placeholder="Paste your text here to analyze... (minimum 50 characters recommended)"
-                            oninput="updateStats()"
-                        ></textarea>
-                        <div class="scanning-line"></div>
-                    </div>
-                    
-                    <div class="flex justify-between items-center mt-4 text-sm text-gray-500 dark:text-gray-400">
-                        <div class="flex gap-4">
-                            <span id="word-count">0 words</span>
-                            <span id="char-count">0 characters</span>
-                        </div>
-                        <span id="status-text">Ready to analyze</span>
-                    </div>
-                    
-                    <button 
-                        onclick="analyzeText()" 
-                        id="analyze-btn"
-                        class="w-full mt-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-2xl flex items-center justify-center">
+                        <svg class="w-10 h-10 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
-                        Detect AI Content
-                    </button>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-2">Drop your image here</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">or click to browse (JPG, PNG, WebP)</p>
+                    <div class="flex justify-center gap-2 text-xs text-gray-400">
+                        <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">Max 10MB</span>
+                        <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">Auto-resize</span>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Editor Interface (Hidden initially) -->
+            <div id="editor-interface" class="hidden animate-slide-up">
                 
-                <!-- Results Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700 opacity-50 pointer-events-none transition-all duration-500" id="results-panel">
-                    <div class="flex justify-between items-center mb-6">
-                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Analysis Results</label>
-                        <button onclick="copyResults()" class="text-xs px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center gap-1">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                            </svg>
-                            Copy
-                        </button>
-                    </div>
-                    
-                    <!-- Score Cards -->
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border-2 border-red-100 dark:border-red-800">
-                            <div class="text-2xl font-bold text-red-600 dark:text-red-400" id="ai-percentage">0%</div>
-                            <div class="text-sm text-red-600/80 dark:text-red-400/80">AI Probability</div>
+                <!-- Toolbar -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 mb-6 border border-gray-200 dark:border-gray-700">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        
+                        <!-- Tools -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="setTool('magic')" id="tool-magic" class="tool-btn active px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm font-medium flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Magic Wand
+                            </button>
+                            <button onclick="setTool('brush')" id="tool-brush" class="tool-btn px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm font-medium flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                                Brush
+                            </button>
+                            <button onclick="setTool('eraser')" id="tool-eraser" class="tool-btn px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-sm font-medium flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                                Eraser
+                            </button>
                         </div>
-                        <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 border-2 border-green-100 dark:border-green-800">
-                            <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="human-percentage">0%</div>
-                            <div class="text-sm text-green-600/80 dark:text-green-400/80">Human Probability</div>
+
+                        <!-- Brush Size -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Size:</span>
+                            <input type="range" min="5" max="50" value="20" id="brush-size" class="w-32 slider-thumb">
+                            <span id="brush-size-val" class="text-sm font-medium w-8">20</span>
                         </div>
-                    </div>
-                    
-                    <!-- Progress Bar -->
-                    <div class="mb-6">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span class="text-gray-600 dark:text-gray-400">AI Likelihood</span>
-                            <span class="font-semibold" id="likelihood-text">Unknown</span>
-                        </div>
-                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                            <div id="probability-bar" class="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 progress-bar" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Detailed Analysis -->
-                    <div class="space-y-4 mb-6">
-                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Detailed Report</h4>
-                        <div id="analysis-details" class="space-y-2 text-sm">
-                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                <span class="text-gray-600 dark:text-gray-400">Perplexity Score</span>
-                                <span class="font-medium" id="perplexity-score">-</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                <span class="text-gray-600 dark:text-gray-400">Burstiness</span>
-                                <span class="font-medium" id="burstiness-score">-</span>
-                            </div>
-                            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
-                                <span class="text-gray-600 dark:text-gray-400">Vocabulary Diversity</span>
-                                <span class="font-medium" id="vocabulary-score">-</span>
-                            </div>
-                            <div class="flex justify-between py-2">
-                                <span class="text-gray-600 dark:text-gray-400">Sentence Variation</span>
-                                <span class="font-medium" id="variation-score">-</span>
-                            </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="resetImage()" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                                Reset
+                            </button>
+                            <button onclick="removeBackground()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium hover:shadow-lg transition">
+                                Auto Remove
+                            </button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Canvas Area -->
+                <div class="grid lg:grid-cols-2 gap-6">
                     
-                    <!-- Highlighted Text Preview -->
-                    <div>
-                        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">Text Analysis</h4>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 flex gap-4">
-                            <span clas
+                    <!-- Original -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800 dark:text-gray-200">Original</h3>
+                            <button onclick="downloadOriginal()" class="text-sm text-purple-600 hover:text-purple-700 dark:text-purple-400">
+                                Download
+                            </button>
+                        </div>
+                        <div class="canvas-container rounded-lg overflow-hidden relative" style="min-height: 400px;">
+                            <canvas id="original-canvas" class="max-w-full h-auto block mx-auto"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-gray-800 dark:text-gray-200">Result</h3>
+                            <div class="flex gap-2">
+                                <button onclick="toggleCompare()" class="text-sm px-3 py-1 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                    Compare
+                                </button>
+                                <button onclick="downloadResult()" class="text-sm px-4 py-1 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                                    Download PNG
+                                </button>
+                            </div>
+                        </div>
+                        <div class="canvas-container rounded-lg overflow-hidden relative" style="min-height: 400px;" id="result-container">
+                            <canvas id="result-canvas" class="max-w-full h-auto block mx-auto"></canvas>
+                            <div id="compare-slider" class="compare-slider hidden" onmousedown="startCompareDrag(event)" ontouchstart="startCompareDrag(event)"></div>
+                        </div>
+                    </div>
+                </div>
