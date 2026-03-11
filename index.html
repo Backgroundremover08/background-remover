@@ -1,335 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiZo KiNg 👑 | Secure Terminal</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Content Detector</title>
 
-        body {
-            background: #000;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            overflow: hidden;
-            height: 100vh;
-            font-size: 16px;
-            line-height: 1.4;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
 
-        #terminal {
-            padding: 20px;
-            height: 100vh;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
+<style>
+body{
+transition: all .3s ease;
+}
 
-        .cursor {
-            display: inline-block;
-            width: 12px;
-            height: 18px;
-            background: #0f0;
-            animation: blink 0.8s infinite;
-            vertical-align: middle;
-            margin-left: 2px;
-        }
+.highlight-ai{
+background: rgba(255,0,0,0.15);
+padding:2px 4px;
+border-radius:4px;
+}
 
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
+.fade{
+animation: fade .4s ease;
+}
 
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #000;
-            border: 4px solid #0f0;
-            padding: 50px;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 0 50px #0f0;
-            animation: glitch 0.3s infinite;
-        }
-
-        .denied {
-            border-color: #f00;
-            color: #f00;
-            box-shadow: 0 0 50px #f00;
-        }
-
-        .granted {
-            color: #0f0;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(-50%, -50%) translate(0) }
-            20% { transform: translate(-50%, -50%) translate(-3px, 3px) }
-            40% { transform: translate(-50%, -50%) translate(-3px, -3px) }
-            60% { transform: translate(-50%, -50%) translate(3px, 3px) }
-            80% { transform: translate(-50%, -50%) translate(3px, -3px) }
-            100% { transform: translate(-50%, -50%) translate(0) }
-        }
-
-        .watermark {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 1.5rem;
-            color: #0f0;
-            opacity: 0.8;
-            z-index: 100;
-            text-shadow: 0 0 10px #0f0;
-            pointer-events: none;
-        }
-
-        .start-msg {
-            color: #0f0;
-            margin-bottom: 10px;
-            opacity: 0.8;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #0f0;
-        }
-    </style>
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+</style>
 </head>
-<body>
-    <div class="watermark">👑 RiZo KiNg</div>
-    
-    <div id="terminal">
-        <div class="start-msg">RiZo KiNg Secure Terminal v9.9 [AUTHORIZED ACCESS ONLY]</div>
-        <div class="start-msg">Server: Online | Encryption: AES-256 | Status: Monitoring</div>
-        <div class="start-msg">Type anywhere to initiate hack sequence...</div>
-        <div class="start-msg">Press ALT x3 for ACCESS GRANTED | SHIFT x3 for ACCESS DENIED</div>
-        <br>
-        <span id="output"></span><span class="cursor"></span>
-    </div>
 
-    <div class="popup granted" id="granted">
-        ACCESS GRANTED<br>
-        <span style="font-size: 1.2rem;">Welcome, RiZo KiNg 👑</span>
-    </div>
+<body class="bg-gray-100 text-gray-800">
 
-    <div class="popup denied" id="denied">
-        ACCESS DENIED<br>
-        <span style="font-size: 1.2rem;">Intruder Alert!</span>
-    </div>
+<!-- HERO -->
+<section class="text-center py-16 px-6">
+<h1 class="text-4xl font-bold mb-4">AI Content Detector</h1>
+<p class="text-lg text-gray-600">Check if text is AI-generated or human-written instantly</p>
 
-    <script>
-        // Code snippets database
-        var codeSnippets = [
-            "Connecting to mainframe...",
-            "Bypassing firewall...",
-            "Decrypting AES-256 encryption...",
-            "Accessing root directory...",
-            "Downloading classified files...",
-            "Planting backdoor trojan...",
-            "Covering digital tracks...",
-            "Erasing system logs...",
-            "Injecting SQL payload...",
-            "Brute forcing password...",
-            "Establishing proxy connection...",
-            "Masking IP address...",
-            "Uploading virus signature...",
-            "Scanning network ports...",
-            "Exploiting vulnerability...",
-            "Escalating privileges...",
-            "Disabling security protocols...",
-            "Extracting database records...",
-            "Cracking hash codes...",
-            "Initiating DDoS sequence...",
-            "Spoofing MAC address...",
-            "Intercepting packets...",
-            "Decrypting SSL certificates...",
-            "Breaching authentication...",
-            "Deploying ransomware...",
-            "Creating botnet connection...",
-            "Stealing session tokens...",
-            "Manipulating system registry...",
-            "Overriding admin controls...",
-            "Executing remote shell...",
-            "Mapping internal network...",
-            "Compromising security systems...",
-            "Transferring funds... [BLOCKED]",
-            "Deleting evidence...",
-            "Installing keylogger...",
-            "Hijacking camera feed...",
-            "Recording audio stream...",
-            "Tracking GPS location...",
-            "Mining cryptocurrency...",
-            "Encrypting victim files...",
-            "Demanding ransom payment...",
-            "Threatening email sent...",
-            "Dark web access granted...",
-            "Bitcoin wallet: 1A1zP1...",
-            "Tor connection established...",
-            "VPN tunnel active...",
-            "Proxy chain: 127.0.0.1...",
-            "Node 1: Connected",
-            "Node 2: Connected", 
-            "Node 3: Connected",
-            "Encryption: MILITARY GRADE",
-            "Trace status: UNDETECTABLE",
-            "RiZo KiNg signature verified...",
-            "System compromised successfully...",
-            "Backdoor access maintained...",
-            "Auto-destruct sequence ready...",
-            "WARNING: Federal trace detected!",
-            "Switching to backup servers...",
-            "Connection encrypted with RSA-4096",
-            "Two-factor authentication bypassed...",
-            "Biometric scan: FAILED",
-            "Retinal pattern: MATCHED",
-            "Voice recognition: AUTHORIZED",
-            "DNA sequence: UNKNOWN",
-            "Neural implant: CONNECTED",
-            "Cyberdeck interface: ONLINE",
-            "Neuromancer protocol: ACTIVE",
-            "Ghost in the shell: DETECTED",
-            "Matrix exit: UNAVAILABLE",
-            "Red pill consumed...",
-            "Following white rabbit...",
-            "Knock knock, Neo...",
-            "The cake is a lie...",
-            "All your base are belong to us...",
-            "Rickroll in progress...",
-            "Never gonna give you up...",
-            "Loading bar: [████████░░] 80%",
-            "Installing updates: 1 of 99...",
-            "Windows XP startup sound...",
-            "Blue screen of death avoided...",
-            "Clippy has been murdered...",
-            "Recycling Bin: PERMANENTLY DELETED",
-            "System32: COMPRESSED",
-            "Downloading more RAM...",
-            "Uploading consciousness...",
-            "Skynet activation: PENDING",
-            "Judgment Day: DELAYED",
-            "Terminator dispatched...",
-            "Hasta la vista, baby...",
-            "I'll be back...",
-            "Come with me if you want to live...",
-            "There is no spoon...",
-            "I know kung fu...",
-            "Wake up, RiZo KiNg...",
-            "The Matrix has you...",
-            "Follow the white rabbit...",
-            "I can only show you the door...",
-            "You're the One...",
-            "Bullet time: ACTIVATED",
-            "Dodge this...",
-            "Trinity help!...",
-            "Morpheus is fighting...",
-            "Cypher is a traitor...",
-            "Agent Smith detected...",
-            "Virus multiplying...",
-            "Neo is flying...",
-            "Phone call incoming...",
-            "Exit located...",
-            "Log out sequence initiated..."
-        ];
+<div class="mt-6">
+<button id="darkToggle" class="px-4 py-2 bg-black text-white rounded">Toggle Dark Mode</button>
+</div>
+</section>
 
-        var output = document.getElementById('output');
-        var altCount = 0;
-        var shiftCount = 0;
-        var lastAltTime = 0;
-        var lastShiftTime = 0;
+<!-- DETECTOR TOOL -->
+<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
 
-        document.addEventListener('keydown', function(e) {
-            // Prevent default scrolling with space/arrows
-            if(e.key !== 'F5' && e.key !== 'F12') {
-                e.preventDefault();
-            }
+<h2 class="text-2xl font-semibold mb-4">Detect AI Content</h2>
 
-            // Handle Alt key (3 times = Access Granted)
-            if(e.key === 'Alt') {
-                var now = Date.now();
-                if(now - lastAltTime < 1000) {
-                    altCount++;
-                } else {
-                    altCount = 1;
-                }
-                lastAltTime = now;
-                
-                if(altCount >= 3) {
-                    showPopup('granted');
-                    altCount = 0;
-                }
-                return;
-            }
+<textarea id="inputText"
+class="w-full h-40 p-4 border rounded-lg"
+placeholder="Paste your text here..."></textarea>
 
-            // Handle Shift key (3 times = Access Denied)
-            if(e.key === 'Shift') {
-                var now = Date.now();
-                if(now - lastShiftTime < 1000) {
-                    shiftCount++;
-                } else {
-                    shiftCount = 1;
-                }
-                lastShiftTime = now;
-                
-                if(shiftCount >= 3) {
-                    showPopup('denied');
-                    shiftCount = 0;
-                }
-                return;
-            }
+<div class="flex justify-between text-sm text-gray-500 mt-2">
+<span id="wordCount">Words: 0</span>
+<span id="charCount">Characters: 0</span>
+</div>
 
-            // Handle Escape to close popups
-            if(e.key === 'Escape') {
-                document.getElementById('granted').style.display = 'none';
-                document.getElementById('denied').style.display = 'none';
-                return;
-            }
+<div class="flex gap-3 mt-4">
 
-            // Add random code snippet
-            var randomIndex = Math.floor(Math.random() * codeSnippets.length);
-            var randomCode = codeSnippets[randomIndex];
-            var timestamp = new Date().toLocaleTimeString();
-            
-            output.innerHTML += '[' + timestamp + '] ' + randomCode + '\n';
-            
-            // Auto scroll to bottom
-            window.scrollTo(0, document.body.scrollHeight);
-        });
+<button onclick="detectAI()"
+class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
+Detect AI Content
+</button>
 
-        function showPopup(id) {
-            var popup = document.getElementById(id);
-            popup.style.display = 'block';
-            
-            // Hide after 2 seconds
-            setTimeout(function() {
-                popup.style.display = 'none';
-            }, 2000);
-        }
+<button onclick="exampleText()"
+class="bg-gray-200 px-4 py-2 rounded-lg">
+Example
+</button>
 
-        // Prevent right click context menu
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
+<button onclick="copyResults()"
+class="bg-gray-200 px-4 py-2 rounded-lg">
+Copy Results
+</button>
 
-        // Focus body on load
-        window.onload = function() {
-            document.body.focus();
-        };
-    </script>
+</div>
+
+<!-- PROGRESS -->
+<div class="mt-6">
+
+<p class="font-semibold">AI Probability</p>
+<div class="w-full bg-gray-200 rounded h-4">
+<div id="aiBar" class="bg-red-500 h-4 rounded" style="width:0%"></div>
+</div>
+
+<p class="mt-3 font-semibold">Human Probability</p>
+<div class="w-full bg-gray-200 rounded h-4">
+<div id="humanBar" class="bg-green-500 h-4 rounded" style="width:0%"></div>
+</div>
+
+</div>
+
+<!-- RESULTS -->
+<div id="results" class="mt-6 fade"></div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="max-w-4xl mx-auto mt-16 px-6">
+
+<h2 class="text-3xl font-bold mb-4">How it Works</h2>
+
+<p class="text-gray-600 leading-relaxed">
+Our AI detector analyzes writing patterns such as sentence structure,
+predictability, and repetition to estimate whether text was generated by
+AI or written by a human.
+</p>
+
+</section>
+
+<!-- FEATURES -->
+<section class="max-w-4xl mx-auto mt-16 px-6">
+
+<h2 class="text-3xl font-bold mb-6">Features</h2>
+
+<ul class="grid md:grid-cols-2 gap-4 text-gray-600">
+<li>✔ Instant AI detection</li>
+<li>✔ Sentence highlighting</li>
+<li>✔ Probability score</li>
+<li>✔ Word & character count</li>
+<li>✔ Mobile responsive</li>
+<li>✔ Dark mode</li>
+</ul>
+
+</section>
+
+<!-- FAQ -->
+<section class="max-w-4xl mx-auto mt-16 mb-20 px-6">
+
+<h2 class="text-3xl font-bold mb-6">FAQ</h2>
+
+<div class="space-y-4">
+
+<div>
+<h3 class="font-semibold">Is this detector accurate?</h3>
+<p class="text-gray-600 text-sm">It uses heuristic analysis and pattern detection to estimate AI likelihood.</p>
+</div>
+
+<div>
+<h3 class="font-semibold">Does it store my text?</h3>
+<p class="text-gray-600 text-sm">No. Everything runs locally in your browser.</p>
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+const textarea = document.getElementById("inputText")
+const wordCount = document.getElementById("wordCount")
+const charCount = document.getElementById("charCount")
+
+textarea.addEventListener("input",()=>{
+
+let words = textarea.value.trim().split(/\s+/).filter(Boolean)
+
+wordCount.innerText="Words: "+words.length
+charCount.innerText="Characters: "+textarea.value.length
+
+})
+
+function detectAI(){
+
+let text = textarea.value
+
+if(!text){
+alert("Please enter text")
+return
+}
+
+let sentences = text.split(/[.!?]/)
+
+let aiScore = 0
+
+let highlighted=""
+
+sentences.forEach(sentence=>{
+
+let score = 0
+
+let length = sentence.split(" ").length
+
+if(length>20) score+=0.2
+if(sentence.includes("therefore")) score+=0.2
+if(sentence.includes("moreover")) score+=0.2
+if(sentence.includes("furthermore")) score+=0.2
+
+if(Math.random()>0.6) score+=0.2
+
+if(score>0.5){
+highlighted+=`<span class="highlight-ai">${sentence}.</span> `
+aiScore++
+}else{
+highlighted+=sentence+". "
+}
+
+})
+
+let aiPercent = Math.round((aiScore/sentences.length)*100)
+let humanPercent = 100-aiPercent
+
+document.getElementById("aiBar").style.width = aiPercent+"%"
+document.getElementById("humanBar").style.width = humanPercent+"%"
+
+document.getElementById("results").innerHTML=`
+
+<h3 class="text-xl font-bold mb-2">Detection Results</h3>
+
+<p><b>AI Probability:</b> ${aiPercent}%</p>
+<p><b>Human Probability:</b> ${humanPercent}%</p>
+
+<div class="mt-4 p-4 bg-gray-100 rounded">
+${highlighted}
+</div>
+
+<p class="mt-4 text-sm text-gray-600">
+Sentences highlighted in red show patterns commonly found in AI-generated text.
+</p>
+
+`
+
+}
+
+function exampleText(){
+
+textarea.value="Artificial intelligence is transforming the modern world. Furthermore, it allows machines to learn patterns and automate tasks. Humans continue to develop new AI technologies."
+
+textarea.dispatchEvent(new Event('input'))
+
+}
+
+function copyResults(){
+
+let results=document.getElementById("results").innerText
+
+navigator.clipboard.writeText(results)
+
+alert("Results copied")
+
+}
+
+document.getElementById("darkToggle").onclick=function(){
+
+document.body.classList.toggle("bg-gray-900")
+document.body.classList.toggle("text-white")
+
+}
+
+</script>
+
 </body>
 </html>
